@@ -1,0 +1,15 @@
+### Sebelum menggunakan [AndroidCore](https://github.com/crocodic-studio/AndroidCoreProject) library, pastikan kamu telah memahami atau sudah familiar dengan:
+
+- [Andorid Studio](https://developer.android.com/studio)
+- [Kotlin](https://kotlinlang.org/)
+- [Android Development dengan Kotlin](https://developer.android.com/kotlin)
+- [Android Jetpack](https://developer.android.com/jetpack)
+- [Component Arsitektur](https://developer.android.com/topic/libraries/architecture)
+  - [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
+  - [View Model](https://developer.android.com/topic/libraries/architecture/viewmodel)
+  - [Data Binding](https://developer.android.com/topic/libraries/data-binding)
+  - [View Binding](https://developer.android.com/topic/libraries/view-binding)
+  - [Room Database](https://developer.android.com/training/data-storage/room)
+- [Retrofit](https://square.github.io/retrofit/)
+- [Dependency Injection](https://developer.android.com/training/dependency-injection/hilt-android)
+- [MVVM](https://developer.android.com/jetpack/guide)
