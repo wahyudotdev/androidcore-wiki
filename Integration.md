@@ -1,0 +1,104 @@
+## Step by step implementasi AndroidCore ke Project  
+
+1. Integrasikan project dengan [Firebase](https://firebase.google.com/?hl=id). Seperti menambah file `google-services.json`.
+2. Tambahkan repository [jitpack.io](https://jitpack.io) di file `settings.gradle`.
+   ```gradle
+   repositories {
+       // other repositories
+       maven { url 'https://jitpack.io' }
+       jcenter() // Warning: this repository is going to shut down soon
+   }
+   ```
+3. Tambahakan depedencies di `build.gradle` level module sepeti crash analystic, hilt dan lainnya.
+   ```gradle
+   dependencies {
+       // other library
+       classpath 'com.google.gms:google-services:4.3.10'
+       classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'
+       classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
+       classpath 'com.google.firebase:perf-plugin:1.4.0'
+   }
+   ```
+4. Selanjutnya, tambahkan plugin" yang dibutuhkan seperti `kotlin-kapt`, `kotlin-parcelize` dan lainnya di file `build.gradle` level app.
+   ```gradle
+   plugins {
+       // other pluginnya
+       id 'kotlin-kapt'
+       id 'dagger.hilt.android.plugin'
+       id 'kotlin-parcelize'
+       id 'com.google.firebase.crashlytics'
+       id 'com.google.firebase.firebase-perf'
+       id 'com.google.gms.google-services'
+   }
+   ```
+5. Di langkah ini kita akan membuat sebuah variable yang di generatekan oleh gradle dan variable tersebut akan di simpan di file `BuildConfig`. Untuk melihat file tersebut, biasanya terdapat di base directory (note: base directory yang di generate oleh gradle bukan yang tempat untuk menyimpan file) (misal: `com.android.firstapp.BuildCondifg`) semisal belum di generate filenya, bisa lakukan rebuild project yang bisa melalui menu `Build -> Rebuild Project`.
+
+   Di file `BuildConfig` ini kita bisa menyiman variable" yang tidak boleh diekspos keluar atau private yang hanya developer yang tahu seperti base url api, token api, auth code dan lainnya.
+
+   tambakan kode ini di file `build.gradle` level app
+
+   ```gradle
+   defaultConfig {
+       // ...
+
+       // kode di bawah ini artinya
+       // kita menyimpan sebuah variable dengan nama BASE_URL
+       // typenya String valuenya https://baserurl.test/
+       buildConfigField "String", "BASE_URL", "\"https://baserurl.test/\""
+   }
+   ```
+
+6. Selanjutnya tambah kode ini di file `build.gradle` level app
+   ```gradle
+   buildTypes {
+       release {
+           minifyEnabled false
+           proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+           manifestPlaceholders = [usesCleartextTraffic: false, crashlyticsEnabled: true, performanceEnabled: true]
+       }
+       debug {
+           debuggable true
+           manifestPlaceholders = [usesCleartextTraffic: true, crashlyticsEnabled: false, performanceEnabled: false]
+       }
+   }
+   ```
+7. Karena [library core crocodic](https://github.com/crocodic-studio/AndroidCoreProject) menggunakan [DataBinding](https://developer.android.com/topic/libraries/data-binding) pastikan kita aktifkan fitur DataBinding di project kita melalui `buildFeatures`di file `build.gradle` level app.
+
+   ```gradle
+   android {
+       // ...
+
+       buildFeatures {
+           viewBinding true
+           dataBinding true
+       }
+   }
+   ```
+
+8. Di Langkah ini menambahkan dependecies yang dibutuhkan ke project, ada bayak sekali library" open source ataupun yang dibuat oleh tim android sendiri, tapi disini kita hanya akan menambhakan library" yang di butuhkan saja atau library yang di intregasikan dengan [library core crocodic](https://github.com/crocodic-studio/AndroidCoreProject).
+
+   ```gradle
+   dependencies {
+       // ini library core crocodic
+       // untuk melihat versi yang terbaru kunjungi
+       // https://github.com/crocodic-studio/AndroidCoreProject/releases
+       implementation 'com.github.crocodic-studio:AndroidCoreProject:3.0.0-beta8'
+
+       // harus di tambahkan
+       implementation 'com.google.dagger:hilt-android:2.38.1'
+       implementation 'androidx.appcompat:appcompat:1.4.0'
+       implementation 'com.google.android.material:material:1.4.0'
+       implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+       // harus di tambahkan
+       kapt 'com.google.dagger:hilt-compiler:2.38.1'
+       kapt 'com.github.bumptech.glide:glide:4.12.0'
+       kapt 'androidx.room:room-compiler:2.3.0'
+
+       testImplementation 'junit:junit:4.+'
+       androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+       androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+   }
+   ```
+
+9. Last step and most most important, enjoy this crocodic core library🎩🎉 and keep learning🎓.
