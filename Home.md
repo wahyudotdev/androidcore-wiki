@@ -2,6 +2,7 @@
 
 ### Here is the table of contents:
 
+
 1. [Precondition](https://github.com/yzzzd/androidcore/wiki/1.-Precondition)
 2. [Integration](https://github.com/yzzzd/androidcore/wiki/2.-Integration)
 3. [Project Structure](https://github.com/yzzzd/androidcore/wiki/3.-Project-Structure)
